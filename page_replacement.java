@@ -42,24 +42,24 @@ public class Main {
         int i ;
         boolean flag=true;
         for (i = 0; i < ref.length; i++,j++) {
-            if(flag==false){  //flag becomes false if  and only if there is page hit
+            if(flag==false){  
                 j=j-1;
             }
-            if(j> frame.length-1){  //this is for the frame array it prevents the extension (if j becomes 3 it makes it 0 again)
+            if(j> frame.length-1){  
                 j=0;
             }
-            for(int g=0;g< frame.length;g++){ //At this part the loop is looking for page hit. If there is page hit flag becomes false
+            for(int g=0;g< frame.length;g++){ 
 
                 if(frame[g]==ref[i]){
                     flag=false;
                     break;
                 }
-                flag=true; //If there is no page hit flag remains true.
+                flag=true; 
 
 
             }
 
-            if(flag==true){ //It counts page faults and sets corresponding frame[j] to ref[i]
+            if(flag==true){
             frame[j]=ref[i];
             c++;
             }
@@ -75,33 +75,33 @@ public class Main {
         int i ;
         int c = 0;
 
-        for (i = 0; i < frame.length; i++) { //At first I added  reference set values (frame.length many) to the frame
+        for (i = 0; i < frame.length; i++) {
             frame[i] = ref[i];
-            c++; //Also I increased page faults here
+            c++; 
         }
-        for(int j =i;j<ref.length;j++){ //Then I created a loop for traverse through the reference set
-            int init=0; //Initial frame index
-            if(flagmethod(ref[j], frame)){ //I controlled page hit with that condition,If it is true continues the loop
+        for(int j =i;j<ref.length;j++){ 
+            int init=0; 
+            if(flagmethod(ref[j], frame)){ 
                 continue;}
-            else{ //If there is no page hit
-                int max=0; //initial maximum distance
+            else{ 
+                int max=0; 
                 for(int k=0;k<frame.length;k++){
                     int count=0;
                     for(int l=j;l<ref.length;l++){
                         if(frame[k]!=ref[l]){
-                            count++; // It starts to count the distance.It continue until it find the same reference set value with corresponding frame value
+                            count++; 
                         }
                         else{
-                            break; //If it found it breaks the loop
+                            break; /
                         }
                     }
-                    if (count>max){  //I set the distance(count) to max and set the index(k) that I found in loop to init variable.
+                    if (count>max){  
                         max=count;
                         init=k;
                     }
                 }
-                frame[init]=ref[j];  //Because of the page fault I set the reference value to corresponding frame
-                c++; // Then I increase the page fault counter
+                frame[init]=ref[j]; 
+                c++; 
             }
         }
         return c;
@@ -110,36 +110,36 @@ public class Main {
  public static int LRU(int[] ref, int[] frame){
      int i;
      int c = 0;
-     for (i = 0; i < frame.length; i++) { //At first I added  reference values (frame.length many) to the frame
+     for (i = 0; i < frame.length; i++) { 
          frame[i] = ref[i];
          c++; //Also I increased page faults here
      }
-     for (int j = i; j < ref.length; j++) { //Again I created a for loop for traverse through the reference set
-         int init = 0; //initial frame index
-         if (flagmethod(ref[j], frame)) // Page Hit control
+     for (int j = i; j < ref.length; j++) { 
+         int init = 0; 
+         if (flagmethod(ref[j], frame)) 
          {
              continue;
          }
          else {
-             int max = 0; //Initial maximum distance
+             int max = 0; 
              for (int k = 0; k < frame.length; k++) {
-                 int count = 0; //for calculate the distance
+                 int count = 0; 
 
                  for (int l = j; l >= 0; l--) {
-                     if (frame[k] != ref[l]) { //This time it starts to count the distance backwardly.It continue until it find the same reference set value with corresponding frame value
-                         count++; //If it cant find it increases the count value.
+                     if (frame[k] != ref[l]) { 
+                         count++; 
                      }
                      else {
-                         break; //If it found the same value it breaks the loop.
+                         break;
                      }
                  }
-                 if (count > max) { //I set the distance(count) to max and set the index(k) that I found in loop to init variable.
+                 if (count > max) { 
                      max = count;
                      init = k;
                  }
              }
-             frame[init] = ref[j]; //Because of the page fault it replaces the frame value with reference set value
-             c++; //It increases page fault
+             frame[init] = ref[j];
+             c++; 
          }
      }
      return c;
